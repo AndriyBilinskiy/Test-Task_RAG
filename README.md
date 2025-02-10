@@ -14,10 +14,9 @@ This is a **Retrieval-Augmented Generation (RAG) app** that helps users explore 
 │── /templates                # HTML frontend
 │   ├── index.html            # User interface
 │── /utils.py                 # Functions for reading & formatting cocktail data
-│── /config
-│   ├── config.py             # Configuration variables (e.g., model names, paths)
-│── faiss_index/              # Saved FAISS vector database
-│── app.py                # FastAPI backend
+│config.py                    # Configuration variables (e.g., model names, paths)
+│── cocktail_faiss_index/     # Saved FAISS vector database
+│── app.py                    # FastAPI backend
 │── requirements.txt          # Required dependencies
 │── README.md                 # Documentation
 ```
