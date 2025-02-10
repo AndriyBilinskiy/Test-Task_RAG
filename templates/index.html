@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cocktail AI Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 80%;
+        }
+        #response, #context {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            background: #f9f9f9;
+            text-align: left;
+            white-space: pre-wrap; /* Preserve formatting */
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Ask the Cocktail AI</h2>
+
+    <input type="text" id="question" placeholder="Enter your question...">
+    <button onclick="askQuestion()">Ask</button>
+
+    <div id="response">
+        <div class="section-title">AI Response:</div>
+        <div id="response-text">Your answer will appear here.</div>
+    </div>
+
+    <div id="context">
+        <div class="section-title">Retrieved Context:</div>
+        <div id="context-text">The context used for generating the response will appear here.</div>
+    </div>
+
+    <script>
+        async function askQuestion() {
+            const question = document.getElementById("question").value;
+            const responseText = document.getElementById("response-text");
+            const contextText = document.getElementById("context-text");
+
+            if (!question) {
+                responseText.innerHTML = "Please enter a question.";
+                return;
+            }
+
+            responseText.innerHTML = "Thinking...";
+            contextText.innerHTML = "";
+
+            const response = await fetch("http://127.0.0.1:8000/query/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ query: question })
+            });
+
+            const data = await response.json();
+            responseText.innerHTML = data.response;
+            contextText.innerHTML = data.context ? data.context : "No relevant context found.";
+        }
+    </script>
+
+</body>
+</html>
